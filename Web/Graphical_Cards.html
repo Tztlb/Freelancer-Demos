@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه با چهار کارت گرافیکی</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Vazir', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1d2b64, #f8cdda);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            direction: rtl;
+            
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover:before {
+            opacity: 0;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: popupAnimation 0.5s ease forwards;
+            direction: rtl; /* Right-to-left for Persian text */
+        }
+
+        @keyframes popupAnimation {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .close-btn {
+            background-color: #ff5c5c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ff1f1f;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            direction: ltr; /* Left-to-right for phone number and email */
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .contact-info .email {
+            direction: rtl;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+
+            .popup-content {
+                max-width: 300px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card" onclick="openPopup(1)">
+            <h2>مزایا و هدایای VIP شدن</h2>
+            <p>از تخفیفات ویژه بهره‌مند شوید</p>
+        </div>
+        <div class="card" onclick="openPopup(2)">
+            <h2>راه‌های ارتباطی و تلفن تماس</h2>
+            <p>با ما در تماس باشید</p>
+        </div>
+        <div class="card" onclick="openPopup(3)">
+            <h2>سایت فروش محصولات</h2>
+            <p>خرید محصولات ما</p>
+        </div>
+        <div class="card" onclick="openPopup(4)">
+            <h2>ما را در اینستاگرام دنبال کنید</h2>
+            <p>جدیدترین خبرها و محصولات</p>
+        </div>
+    </div>
+
+    <div class="popup" id="popup1">
+        <div class="popup-content">
+            <h2>مزایا و هدایای <span class="vip-highlight">VIP</span> شدن</h2>
+            <p>با <span class="vip-highlight">VIP</span> شدن از تخفیفات ویژه و هدایای منحصر به فرد بهره‌مند شوید.</p>
+            <button class="close-btn" onclick="closePopup(1)">بستن</button>
+        </div>
+    </div>
+    
+    <!-- Popup 2 -->
+    <div class="popup" id="popup2">
+        <div class="popup-content">
+            <h2>راه‌های ارتباطی و تلفن تماس</h2>
+            <p>تلفن تماس: ۰۲۱۱۲۳۴۵۶۷<br>ایمیل: info@example.com</p>
+            <button class="close-btn" onclick="closePopup(2)">بستن</button>
+        </div>
+    </div>
+
+    <!-- Popup 3 -->
+    <div class="popup" id="popup3">
+        <div class="popup-content">
+            <h2>سایت فروش محصولات</h2>
+            <p>برای مشاهده محصولات، به <a href="https://www.example.com" target="_blank">سایت ما</a> مراجعه کنید.</p>
+            <button class="close-btn" onclick="closePopup(3)">بستن</button>
+        </div>
+    </div>
+
+    <!-- Popup 4 -->
+    <div class="popup" id="popup4">
+        <div class="popup-content">
+            <h2>ما را در اینستاگرام دنبال کنید</h2>
+            <p>برای دنبال کردن ما در اینستاگرام، به <a href="https://www.instagram.com" target="_blank">صفحه ما</a> سر بزنید.</p>
+            <button class="close-btn" onclick="closePopup(4)">بستن</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to open a specific popup
+        function openPopup(popupNumber) {
+            document.getElementById('popup' + popupNumber).style.display = 'flex';
+        }
+
+        // Function to close a specific popup
+        function closePopup(popupNumber) {
+            document.getElementById('popup' + popupNumber).style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
